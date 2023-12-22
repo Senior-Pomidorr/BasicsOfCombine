@@ -10,27 +10,37 @@ import SwiftUI
 struct MoviesView: View {
     @StateObject var viewModel = MovieViewModel()
     var body: some View {
-        List(viewModel.moviesUpcoming) { movies in
-                HStack {
-                    AsyncImage(url: movies.posterUrl) { poster in
-                        poster
+        List(viewModel.movies) { movies in
+            HStack {
+                AsyncImage(url: movies.posterUrl) { state in
+                    switch state {
+                    case .empty:
+                        ProgressView()
+                            .frame(width: 100)
+                    case .success(let image):
+                        image
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 100)
-                    } placeholder: {
-                        ProgressView()
+                            .cornerRadius(8)
+                    case .failure(_):
+                        Image(systemName: "wifi.slash")
                             .frame(width: 100)
-                    }
-                    
-                    VStack(alignment: .leading) {
-                        Text(movies.title)
-                            .font(.headline)
-                        Text(movies.overview)
-                            .font(.caption)
-                            .lineLimit(3)
+                    @unknown default:
+                        EmptyView()
                     }
                 }
+                
+                VStack(alignment: .leading) {
+                    Text(movies.title)
+                        .font(.headline)
+                    Text(movies.overview)
+                        .font(.caption)
+                        .lineLimit(3)
+                }
             }
+        }
+        .searchable(text: $viewModel.searchQuery)
         .onAppear() {
             viewModel.fetchInitialData()
         }
