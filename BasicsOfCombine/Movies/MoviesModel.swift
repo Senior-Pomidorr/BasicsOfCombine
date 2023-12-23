@@ -32,7 +32,7 @@ struct MovieResponse: Decodable {
 struct MovieCastMember: Identifiable, Equatable, Decodable {
     let id: Int
     let name: String
-    let charahter: String
+    let character: String
 }
 
 struct MovieCreditResponse: Decodable {

@@ -16,13 +16,37 @@ struct MovieDetailsView: View {
     }
     
     var body: some View {
+        
         List{
+            HStack(alignment: .center) {
+                Spacer()
+                AsyncImage(url: viewModel.movie.posterUrl) { state in
+                    switch state {
+                    case .empty:
+                        ProgressView()
+                            .padding(.horizontal, 10)
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .cornerRadius(8)
+                            .padding(.horizontal, 0)
+                    case .failure(_):
+                        Image(systemName: "wifi.slash")
+                            .padding(.horizontal, 10)
+                    @unknown default:
+                        EmptyView()
+                    }
+                }
+                Spacer()
+            }
+            
             Section(header: Text("Credits")) {
                 ForEach(viewModel.data.credits) { credit in
                     VStack(alignment: .leading) {
                         Text(credit.name)
                             .font(.headline)
-                        Text(credit.charahter)
+                        Text(credit.character)
                             .font(.caption)
                     }
                 }
