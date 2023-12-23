@@ -30,3 +30,25 @@ func searchMovies(for query: String) -> some Publisher<MovieResponse, Error> {
         .map(\.data)
         .decode(type: MovieResponse.self, decoder: jsonDecoder)
 }
+
+func fetchCredits(for movie: Movie) -> some Publisher<MovieCreditResponse, Error> {
+    guard let url = URL(string: "https://api.themoviedb.org/3/movie/\(movie.id)/credits?api_key=\(apiKey)") else { return Fail(error: NetworkingError.invalidURL).eraseToAnyPublisher() }
+    return URLSession
+        .shared.dataTaskPublisher(for: url)
+        .map(\.data)
+        .decode(type: MovieCreditResponse.self, decoder: jsonDecoder)
+        .eraseToAnyPublisher()
+}
+
+func fetchReviews(for movie: Movie) -> some Publisher<MovieReviewsResponse, Error> {
+    guard let url = URL(string: "https://api.themoviedb.org/3/movie/\(movie.id)/reviews?api_key=\(apiKey)") else { return Fail(error: NetworkingError.invalidURL).eraseToAnyPublisher() }
+    return URLSession
+        .shared.dataTaskPublisher(for: url)
+        .map(\.data)
+        .decode(type: MovieReviewsResponse.self, decoder: jsonDecoder)
+        .eraseToAnyPublisher()
+}
+
+enum NetworkingError: Error {
+    case invalidURL
+}
