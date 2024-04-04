@@ -63,8 +63,9 @@
 			children = (
 				0D4AF8132B3428090033017D /* BasicsOfCombineApp.swift */,
 				0D4AF8232B3465710033017D /* Network.swift */,
-				0D4AF8272B360B870033017D /* Movies */,
+				0D4AF8212B3428530033017D /* MoviesModel.swift */,
 				0D4AF8282B360FD80033017D /* MovieDetails */,
+				0D4AF8272B360B870033017D /* Movies */,
 				0D4AF8172B34280B0033017D /* Assets.xcassets */,
 				0D4AF8192B34280B0033017D /* Preview Content */,
 			);
@@ -82,7 +83,6 @@
 		0D4AF8272B360B870033017D /* Movies */ = {
 			isa = PBXGroup;
 			children = (
-				0D4AF8212B3428530033017D /* MoviesModel.swift */,
 				0D4AF8252B3471080033017D /* MovieViewModel.swift */,
 				0D4AF8152B3428090033017D /* MoviesView.swift */,
 			);

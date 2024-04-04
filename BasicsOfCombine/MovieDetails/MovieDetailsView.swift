@@ -16,8 +16,7 @@ struct MovieDetailsView: View {
     }
     
     var body: some View {
-        
-        List{
+        List {
             HStack(alignment: .center) {
                 Spacer()
                 AsyncImage(url: viewModel.movie.posterUrl) { state in
@@ -51,6 +50,7 @@ struct MovieDetailsView: View {
                     }
                 }
             }
+            
             Section(header: Text("Reviews")) {
                 ForEach(viewModel.data.reviews) { review in
                     VStack(alignment: .leading, spacing: 8) {
@@ -62,6 +62,7 @@ struct MovieDetailsView: View {
                 }
             }
         }
+        .listStyle(.plain)
         .navigationTitle(viewModel.movie.title)
         .onAppear() {
             viewModel.fetchData()

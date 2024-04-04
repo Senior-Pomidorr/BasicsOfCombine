@@ -7,12 +7,6 @@
 
 import Foundation
 
-let jsonDecoder: JSONDecoder = {
-    let decoder = JSONDecoder()
-    decoder.keyDecodingStrategy = .convertFromSnakeCase
-    return decoder
-}()
-
 let apiKey = "e8b7e7865472b86ec7f5c61aab670dfd"
 
 struct Movie: Decodable, Equatable, Identifiable {
@@ -48,3 +42,4 @@ struct MovieReviews: Identifiable, Equatable, Decodable {
 struct MovieReviewsResponse: Decodable {
     let results: [MovieReviews]
 }
+

@@ -45,6 +45,7 @@ struct MoviesView: View {
                 }
             }
         }
+        .listStyle(.plain)
         .searchable(text: $viewModel.searchQuery)
         .onAppear() {
             viewModel.fetchInitialData()

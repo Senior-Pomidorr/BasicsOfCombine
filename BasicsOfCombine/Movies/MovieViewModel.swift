@@ -12,6 +12,7 @@ final class MovieViewModel: ObservableObject {
     @Published var moviesUpcoming: [Movie] = []
     @Published var searchResults: [Movie] = []
     @Published var searchQuery: String = ""
+    private var network = Network()
     var caтcellables = Set<AnyCancellable>()
     var movies: [Movie] {
         if searchQuery.isEmpty {
@@ -25,7 +26,7 @@ final class MovieViewModel: ObservableObject {
         $searchQuery
             .debounce(for: 0.3, scheduler: DispatchQueue.main)
             .map { searchQuery in
-                searchMovies(for: searchQuery)
+                self.network.searchMovies(for: searchQuery)
                     .replaceError(with: MovieResponse(results: []))
             }
             .switchToLatest()
@@ -35,7 +36,7 @@ final class MovieViewModel: ObservableObject {
     }
     
     func fetchInitialData() {
-        fetchMovies()
+        network.fetchMovies()
             .map(\.results)
             .receive(on: DispatchQueue.main)
             .replaceError(with: [])
